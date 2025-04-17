@@ -91,64 +91,66 @@ export default function HomeScreen() {
 
 
   return (
-    <View style={tw`bg-white dark:bg-gray-900 flex-1`}>
-      <SafeAreaView style={tw`px-4 py-2`}>
-        <ThemedText style={tw`text-2xl text-black font-bold mt-8 mb-2`} onPress={addTask}>📋 nGopoyo</ThemedText>
-        <View style={tw`flex pb-5 flex-row justify-center items-center`}>
+    
+    <View style={tw`px-5 bg-white dark:bg-gray-900 flex-1`}>
+      <SafeAreaView style={tw`py-4`}>
+        <ThemedText style={tw`text-3xl text-black font-bold mt-8 mb-4 text-center`} onPress={addTask}>📋 nGopoyo</ThemedText>
+        <View style={tw`flex pb-6 flex-row gap-4 justify-center items-center`}>
           <TextInput
-            style={tw`mr-4 bg-gray-200 dark:bg-gray-700 p-3 rounded-lg w-64 text-black dark:text-white`}
-            placeholder="Enter text here"
-            placeholderTextColor={tw.color('gray-500')}
+            style={tw`bg-gray-100 dark:bg-gray-700 p-4 rounded-xl w-72 text-black dark:text-white shadow-sm`}
+            placeholder="What's your task?"
+            placeholderTextColor={tw.color('gray-400')}
             value={task}
             onChangeText={setTask}
           />
-          <TouchableOpacity style={tw`mr-4 bg-purple-800 p-2 px-4 rounded-lg`} onPress={isEditing ? handleEdit : addTask}>
-            <AntDesign name="plus" size={24} color="white" />
+          <TouchableOpacity 
+            style={tw`bg-purple-700 p-3 rounded-xl shadow-lg`} 
+            onPress={isEditing ? handleEdit : addTask}
+          >
+            <AntDesign name={isEditing ? "edit" : "plus"} size={26} color="white" />
           </TouchableOpacity>
         </View>
-        <ThemedText style={tw`text-gray-500 font-bold`}>TO DO : {list.length}</ThemedText>
+        <ThemedText style={tw`text-gray-500 font-bold text-lg mb-2`}>To do : {list.length}</ThemedText>
         <FlatList
           data={list}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <ThemedView style={tw`py-3 px-4 my-2 shadow-xl bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex flex-row justify-between items-center`}>
-              <View style={tw`flex flex-row items-center gap-1`}>
+            <ThemedView style={tw`py-4 px-5 my-2 bg-white dark:bg-gray-800 rounded-xl shadow-md flex flex-row justify-between items-center`}>
+              <View style={tw`flex px-5 flex-row items-center gap-3`}>
                 <TouchableOpacity
                   onPress={() => {
                     handleCheckmark(item.id);
                   }}
-                  style={tw`p-2 rounded-lg`}
+                  style={tw`p-2`}
                 >
-                  <View style={tw`w-6 h-6 border-2 border-gray-400 rounded-md justify-center items-center ${item.done ? 'bg-green-500 border-green-500' : 'bg-white'}`}>
-                    {item.done && <AntDesign name="check" size={16} color="white" />}
+                  <View style={tw`w-7 h-7 border-2 border-gray-400 rounded-lg justify-center items-center ${item.done ? 'bg-green-500 border-green-500' : 'bg-white'}`}>
+                    {item.done && <AntDesign name="check" size={18} color="white" />}
                   </View>
                 </TouchableOpacity>
-                <ThemedText style={tw`text-gray-600 dark:text-white text-start`}>{item.text}</ThemedText>
+                <ThemedText style={tw`text-gray-700 dark:text-white text-lg ${item.done ? 'line-through text-gray-400' : ''}`}>{item.text}</ThemedText>
               </View>
-              <View style={tw`flex flex-row justify-center items-center text-start`}>
-                <View style={tw` flex flex-row gap-1`}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      startEditing(item);
-                    }}
-                    style={tw`bg-purple-800 p-2 rounded-lg`}
-                  >
-                    <FontAwesome name="pencil" size={24} color="white" />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      deleteTask(item.id);
-                    }}
-                    style={tw`bg-red-500 p-2 rounded-lg`}
-                  >
-                    <FontAwesome6 name="trash" size={24} color="white" />
-                  </TouchableOpacity>
-                </View>
+              <View style={tw`flex flex-row gap-2`}>
+                <TouchableOpacity
+                  onPress={() => {
+                    startEditing(item);
+                  }}
+                  style={tw`bg-purple-700 p-2.5 rounded-xl shadow-lg`}
+                >
+                  <FontAwesome name="pencil" size={22} color="white" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    deleteTask(item.id);
+                  }}
+                  style={tw`bg-red-500 p-2.5 rounded-xl shadow-lg`}
+                >
+                  <FontAwesome6 name="trash" size={22} color="white" />
+                </TouchableOpacity>
               </View>
             </ThemedView>
           )}
         />
       </SafeAreaView>
-    </View>
-  );
+    </View>  
+    );
 }
